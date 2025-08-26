@@ -1,96 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ganesha Invitation</title>
+  <title>Ganesh Invitation Card</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: url('https://raw.githubusercontent.com/priyanshcchandrakar-cyber/Ganesha-invitation-/main/ganesh_card.png') no-repeat center center/cover;
-      font-family: Arial, sans-serif;
-    }
-
-    .card {
-      position: relative;
-      width: 350px;
-      height: 500px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
-
-    .name-input {
-      position: absolute;
-      bottom: 50px; /* jaha naam chahiye waha adjust kar */
-      width: 80%;
       text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: #000;
+      font-family: "Noto Sans Devanagari", Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
     }
-
-    input {
-      padding: 8px;
+    #preview {
       margin-top: 20px;
-      font-size: 16px;
-      border: 2px solid #444;
-      border-radius: 8px;
-      outline: none;
+      border: 2px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-
     button {
       margin-top: 10px;
       padding: 10px 20px;
-      background: #ff5722;
-      border: none;
-      color: white;
       font-size: 16px;
+      border: none;
       border-radius: 8px;
+      background: #d32f2f;
+      color: white;
       cursor: pointer;
     }
-
     button:hover {
-      background: #e64a19;
+      background: #b71c1c;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
     }
   </style>
 </head>
 <body>
-  <div>
-    <input type="text" id="name" placeholder="Enter your name">
-    <button onclick="generateCard()">Generate Card</button>
-  </div>
 
-  <canvas id="canvas" width="350" height="500" style="display:none;"></canvas>
-  <a id="downloadLink" style="display:none;">Download Card</a>
+  <h2>🙏 अपना नाम लिखें और कार्ड डाउनलोड करें 🙏</h2>
+  <input type="text" id="nameInput" placeholder="अपना नाम लिखें">
+  <br>
+  <button onclick="generateCard()">Generate & Download</button>
+
+  <br><br>
+  <canvas id="cardCanvas" width="768" height="1177"></canvas>
+  <br>
+  <a id="downloadLink" style="display:none;">⬇️ Download Now</a>
 
   <script>
     function generateCard() {
-      const name = document.getElementById('name').value;
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.getElementById("cardCanvas");
+      const ctx = canvas.getContext("2d");
+      const name = document.getElementById("nameInput").value.trim();
+
+      if (!name) {
+        alert("कृपया अपना नाम लिखें!");
+        return;
+      }
+
       const img = new Image();
-      img.src = "https://raw.githubusercontent.com/priyanshcchandrakar-cyber/Ganesha-invitation-/main/ganesh_card.png";
+      img.src = "ganesh_card.png"; // background card
 
       img.onload = function () {
+        // Background draw
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        ctx.font = "24px Arial";
-        ctx.fillStyle = "#000"; // naam ka color
-        ctx.textAlign = "center";
-        ctx.fillText(name, canvas.width / 2, canvas.height - 50);
 
-        const link = document.getElementById('downloadLink');
-        link.download = "ganesha_invitation.png";
-        link.href = canvas.toDataURL();
-        link.style.display = "block";
-        link.innerText = "Download Card";
+        // Name styling
+        ctx.font = "bold 28px Noto Sans Devanagari";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+
+        // Position (box ke center me)
+        ctx.fillText(name, canvas.width / 2, 260);
+
+        // Download link
+        const link = document.getElementById("downloadLink");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "Ganesh_Invitation.png";
+        link.style.display = "inline";
       };
     }
   </script>
+
 </body>
 </html>

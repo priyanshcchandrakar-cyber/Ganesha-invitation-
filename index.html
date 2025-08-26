@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ganesha Invitation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://raw.githubusercontent.com/priyanshcchandrakar-cyber/Ganesha-invitation-/main/ganesh_card.png') no-repeat center center/cover;
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      position: relative;
+      width: 350px;
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .name-input {
+      position: absolute;
+      bottom: 50px; /* jaha naam chahiye waha adjust kar */
+      width: 80%;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    input {
+      padding: 8px;
+      margin-top: 20px;
+      font-size: 16px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #ff5722;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e64a19;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="text" id="name" placeholder="Enter your name">
+    <button onclick="generateCard()">Generate Card</button>
+  </div>
+
+  <canvas id="canvas" width="350" height="500" style="display:none;"></canvas>
+  <a id="downloadLink" style="display:none;">Download Card</a>
+
+  <script>
+    function generateCard() {
+      const name = document.getElementById('name').value;
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.src = "https://raw.githubusercontent.com/priyanshcchandrakar-cyber/Ganesha-invitation-/main/ganesh_card.png";
+
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.font = "24px Arial";
+        ctx.fillStyle = "#000"; // naam ka color
+        ctx.textAlign = "center";
+        ctx.fillText(name, canvas.width / 2, canvas.height - 50);
+
+        const link = document.getElementById('downloadLink');
+        link.download = "ganesha_invitation.png";
+        link.href = canvas.toDataURL();
+        link.style.display = "block";
+        link.innerText = "Download Card";
+      };
+    }
+  </script>
+</body>
+</html>
